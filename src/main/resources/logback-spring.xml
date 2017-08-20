@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="1 second" debug="true">
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework.web" level="INFO"/>
+    <property name="LOG_PATH" value="../logs" />
+    <property name="LOG_NAME" value="sjdbc-order" />
+    <!-- 日志记录器，日期滚动记录 -->
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/${LOG_NAME}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${LOG_PATH}/${LOG_NAME}.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %c:%L - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="File" />
+    </root>
+
+    <springProfile name="dev">
+        <logger name="com.springframework.web" level="debug" />
+        <logger name="com.cachexic.sjdbc" level="debug" />
+    </springProfile>
+    <springProfile name="prod">
+        <logger name="com.springframework.web" level="info" />
+        <logger name="com.cachexic.sjdbc" level="info" />
+    </springProfile>
+</configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cachexic.sjdbc.order.dao.OrderDao">
+    <sql id="table"> t_order_0 </sql>
+    <sql id="columns"> id,user_id,order_sn,version,create_time,create_user_id,update_time,update_user_id,status </sql>
+
+    <resultMap id="order" type="com.cachexic.sjdbc.order.entity.Order">
+        <result property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="orderSn" column="order_sn" />
+
+        <result property="version" column="version" />
+        <result property="createTime" column="create_time" />
+        <result property="createUserId" column="create_user_id" />
+        <result property="updateTime" column="update_time" />
+        <result property="updateUserId" column="update_user_id" />
+        <result property="status" column="status" />
+    </resultMap>
+
+    <!--单条插入-->
+    <insert id="insert" parameterType="com.cachexic.sjdbc.order.entity.Order">
+        insert into
+        <include refid="table" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,version,status,create_time,create_user_id,
+            <if test="userId != null">user_id,</if>
+            <if test="orderSn != null">order_sn</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{id},#{version},#{status},now(),#{createUserId},
+            <if test="userId != null">#{userId},</if>
+            <if test="orderSn != null">#{orderSn}</if>
+        </trim>
+    </insert>
+
+    <select id="selectTest" resultType="long">
+        select id from t_order_0
+    </select>
+</mapper>
