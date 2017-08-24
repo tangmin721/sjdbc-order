@@ -40,7 +40,7 @@
     </select>
 
     <select id="selectTestOrderById" resultMap="order">
-        select * from <include refid="table"/> order by id
+        select * from <include refid="table"/> order by id desc
     </select>
 
     <select id="selectTestOrderByIdLimit" resultMap="order">
