@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.order.controller;
 
-import com.cachexic.sjdbc.common.utils.json.JsonUtils;
+import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.google.common.collect.Lists;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +26,9 @@ public class OrderController {
         order.setCreateTime(new Date());
         order.setUserId(1L);
 
-        String json = JsonUtils.toJson(order);
-        Order order1 = JsonUtils.toEntity(json, Order.class);
-        System.out.println("getOrderById::"+JsonUtils.toJson(order1));
+        String json = JsonUtil.toJson(order);
+        Order order1 = JsonUtil.toEntity(json, Order.class);
+        System.out.println("getOrderById::"+ JsonUtil.toJson(order1));
 
         return json;
     }
@@ -48,10 +48,10 @@ public class OrderController {
         order1.setUserId(2L);
         orders.add(order1);
 
-        String json = JsonUtils.toJson(orders);
+        String json = JsonUtil.toJson(orders);
 
-        List<Order> orders1 = JsonUtils.toList(json, Order.class);
-        System.out.println("getOrderList:::"+JsonUtils.toJson(orders1));
+        List<Order> orders1 = JsonUtil.toList(json, Order.class);
+        System.out.println("getOrderList:::"+ JsonUtil.toJson(orders1));
 
         return json;
     }

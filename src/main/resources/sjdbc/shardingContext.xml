@@ -12,14 +12,19 @@
     <context:component-scan base-package="com.cachexic.sjdbc" />
     <context:property-placeholder ignore-unresolvable="true"/>
 
-    <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
-    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>
-    
+    <!--基于类的方式-->
+   <!-- <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>-->
+
+    <!--基于表达式的方式-->
+    <rdb:strategy id="databaseShardingStrategy" sharding-columns="id" algorithm-expression="ds_${Math.floorMod(id.longValue(),2L)}"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="id" algorithm-expression="t_order_${Math.floorMod(Math.floorDiv(id.longValue(),2L),2L)}"/>
+
     <rdb:data-source id="shardingDataSource">
         <rdb:sharding-rule data-sources="ds_0, ds_1">
             <rdb:table-rules>
                 <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
-                    <rdb:generate-key-column column-name="order_id"/>
+                    <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
             </rdb:table-rules>
         </rdb:sharding-rule>

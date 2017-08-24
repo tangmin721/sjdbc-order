@@ -1,6 +1,7 @@
 package com.cachexic.sjdbc.order.dao;
 
-import com.cachexic.sjdbc.common.core.StatusEnum;
+import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.entity.Order;
 import org.junit.Test;
@@ -18,17 +19,20 @@ public class OrderDaoTest extends JunitTestParent {
 
     @Test
     public void insert() throws Exception {
-        Order order = new Order();
-        order.setId(12L);
-        order.setUserId(1L);
-        order.setCreateUserId(1L);
-        order.setStatus(StatusEnum.deleted);
-        orderDao.insert(order);
+
+        for(long i=1;i<100;i++){
+            Order order = new Order();
+            order.setId(i);
+            order.setUserId(i);
+            order.setOrderSn(UUIDUtil.getUUID());
+            order.setCreateUserId(i);
+            orderDao.insert(order);
+        }
     }
 
     @Test
     public void selectTest() throws Exception {
-        System.out.println(orderDao.selectTest());
+        System.out.println(JsonUtil.toJson(orderDao.selectTest()));
     }
 
 

@@ -10,7 +10,7 @@ import java.util.List;
  */
 @MybatisDao
 public interface OrderDao {
-    long insert(Order order);
+    Long insert(Order order);
 
-    List<Long> selectTest();
+    List<Order> selectTest();
 }

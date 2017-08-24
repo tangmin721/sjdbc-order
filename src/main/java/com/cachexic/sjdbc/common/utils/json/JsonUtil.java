@@ -5,12 +5,12 @@ import java.util.List;
 /**
  * @author tangmin
  * @version V1.0
- * @Title: JsonUtils.java
+ * @Title: JsonUtil.java
  * @Package com.gasq.cloud.common.utils.json
  * @Description: 工具类：
  * @date 2017-05-04 14:04:23
  */
-public class JsonUtils {
+public class JsonUtil {
 
     /*** 将List对象序列化为JSON文本 */
     public static <T> String toJson(Object object) {
