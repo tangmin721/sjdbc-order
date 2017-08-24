@@ -1,9 +1,16 @@
 server:
   port: 80
 
-spring:
-  datasource:
-      name: master
-      url: jdbc:mysql://localhost:3306/ds_0?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-      username: root
-      password: root1234
+sharding:
+  jdbc:
+    datasource:
+      ds_0:
+        name: master
+        url: jdbc:mysql://localhost:3306/prod_ds_0?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        username: root
+        password: root1234
+      ds_1:
+        name: master
+        url: jdbc:mysql://localhost:3306/prod_ds_1?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        username: root
+        password: root1234

@@ -73,8 +73,6 @@
             <version>${druid.version}</version>
         </dependency>
 
-
-
         <!--sjdbc分库分表-->
         <dependency>
             <groupId>com.dangdang</groupId>
@@ -96,7 +94,13 @@
             <artifactId>sharding-jdbc-config-spring</artifactId>
             <version>${sharding-jdbc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-config-spring</artifactId>
+            <version>${sharding-jdbc.version}</version>
+        </dependency>
 
+        <!--工具类-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

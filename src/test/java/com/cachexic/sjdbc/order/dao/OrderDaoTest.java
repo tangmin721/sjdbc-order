@@ -5,10 +5,12 @@ import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.entity.Order;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * Created by tangm on 2017/8/20.
  */
+@ActiveProfiles("dev")
 public class OrderDaoTest extends JunitTestParent {
 
     @Autowired

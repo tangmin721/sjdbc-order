@@ -1,10 +1,12 @@
 package com.cachexic.sjdbc.common.config.mybatis;
 
+import com.dangdang.ddframe.rdb.sharding.jdbc.core.datasource.ShardingDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -13,7 +15,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -27,14 +28,18 @@ import java.io.IOException;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(value = "com.cachexic.sjdbc", annotationClass = MybatisDao.class)
+@Order(3)
 public class MybatisConfig implements TransactionManagementConfigurer {
+    /**
+     * 注入shardingDataSource
+     */
     @Autowired
-    private DataSource dataSource;
+    private ShardingDataSource shardingDataSource;
 
     @Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setDataSource(shardingDataSource);
 
         //mapper文件路径
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -47,9 +52,13 @@ public class MybatisConfig implements TransactionManagementConfigurer {
         return sqlSessionFactoryBean;
     }
 
+    /**
+     * 开启事务注解
+     * @return
+     */
     @Bean
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return new DataSourceTransactionManager(dataSource);
+        return new DataSourceTransactionManager(shardingDataSource);
     }
 }

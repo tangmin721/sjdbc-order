@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cachexic.sjdbc.order.dao.OrderDao">
-    <sql id="table"> t_order_0 </sql>
+    <sql id="table"> t_order </sql>
     <sql id="columns"> id,user_id,order_sn,version,create_time,create_user_id,update_time,update_user_id,status </sql>
 
     <resultMap id="order" type="com.cachexic.sjdbc.order.entity.Order">
@@ -35,6 +35,6 @@
     </insert>
 
     <select id="selectTest" resultType="long">
-        select id from t_order_0
+        select id from <include refid="table"/>
     </select>
 </mapper>

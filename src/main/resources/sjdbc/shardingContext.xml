@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd 
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.dangdang.com/schema/ddframe/rdb 
+                        http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
+    <context:component-scan base-package="com.cachexic.sjdbc" />
+    <context:property-placeholder ignore-unresolvable="true"/>
+
+    <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>
+    
+    <rdb:data-source id="shardingDataSource">
+        <rdb:sharding-rule data-sources="ds_0, ds_1">
+            <rdb:table-rules>
+                <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
+                    <rdb:generate-key-column column-name="order_id"/>
+                </rdb:table-rule>
+            </rdb:table-rules>
+        </rdb:sharding-rule>
+        <rdb:props>
+            <prop key="sql.show">true</prop>
+        </rdb:props>
+    </rdb:data-source>
+
+
+</beans>

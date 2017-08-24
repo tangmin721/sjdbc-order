@@ -6,11 +6,14 @@ import com.alibaba.druid.support.http.WebStatFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -19,18 +22,13 @@ import java.sql.SQLException;
 
 @Component
 @Configuration
-public class DruidDatasource {
+@Order(1)
+public class DruidDatasource implements CommandLineRunner {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-
-    @Value("${spring.datasource.username}")
-    private String username;
-
-    @Value("${spring.datasource.password}")
-    private String password;
-
+    /**
+     * 公共属性
+     */
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 
@@ -82,6 +80,56 @@ public class DruidDatasource {
     @Value("${spring.datasource.slowSqlMillis}")
     private String slowSqlMillis;
 
+    /**
+     * 数据源ds_0
+     * @param url
+     * @param username
+     * @param password
+     * @return
+     */
+    @Bean(name = "ds_0")
+    @Primary
+    @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
+    public DataSource ds_0(
+            @Value("${sharding.jdbc.datasource.ds_0.url}") String url,
+            @Value("${sharding.jdbc.datasource.ds_0.username}") String username,
+            @Value("${sharding.jdbc.datasource.ds_0.password}") String password) {
+        DruidDataSource datasource = getDruidDataSource(url, username, password);
+        return datasource;
+    }
+
+    /**
+     * 数据源ds_1
+     * @param url
+     * @param username
+     * @param password
+     * @return
+     */
+    @Bean(name = "ds_1")
+    @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
+    public DataSource ds_1(
+            @Value("${sharding.jdbc.datasource.ds_1.url}") String url,
+            @Value("${sharding.jdbc.datasource.ds_1.username}") String username,
+            @Value("${sharding.jdbc.datasource.ds_1.password}") String password) {
+        DruidDataSource datasource = getDruidDataSource(url, username, password);
+        return datasource;
+    }
+
+    private DruidDataSource getDruidDataSource(String url, String username, String password) {
+        DruidDataSource datasource = new DruidDataSource();
+        datasource.setUrl(url);
+        datasource.setUsername(username);
+        datasource.setPassword(password);
+        setCommonProperties(datasource);
+        try {
+            datasource.setFilters(filters);
+        } catch (SQLException e) {
+            logger.error("druid configuration initialization filter", e);
+        }
+        return datasource;
+    }
+
+
     @Bean
     public ServletRegistrationBean druidServlet() {
         ServletRegistrationBean reg = new ServletRegistrationBean();
@@ -104,14 +152,7 @@ public class DruidDatasource {
         return filterRegistrationBean;
     }
 
-    @Bean
-    @Primary
-    public DataSource dataSource() {
-        DruidDataSource datasource = new DruidDataSource();
-
-        datasource.setUrl(this.dbUrl);
-        datasource.setUsername(username);
-        datasource.setPassword(password);
+    private void setCommonProperties(DruidDataSource datasource) {
         datasource.setDriverClassName(driverClassName);
         datasource.setInitialSize(initialSize);
         datasource.setMinIdle(minIdle);
@@ -128,12 +169,10 @@ public class DruidDatasource {
         datasource.setRemoveAbandonedTimeout(removeAbandonedTimeout);
         datasource.setLogAbandoned(logAbandoned);
         datasource.setConnectionProperties("druid.stat.slowSqlMillis="+slowSqlMillis);
-        try {
-            datasource.setFilters(filters);
-        } catch (SQLException e) {
-            logger.error("druid configuration initialization filter", e);
-        }
-        return datasource;
     }
 
+    @Override
+    public void run(String... strings) throws Exception {
+
+    }
 }
