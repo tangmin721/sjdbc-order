@@ -94,8 +94,7 @@ public class DruidDatasource implements CommandLineRunner {
             @Value("${sharding.jdbc.datasource.ds_0.url}") String url,
             @Value("${sharding.jdbc.datasource.ds_0.username}") String username,
             @Value("${sharding.jdbc.datasource.ds_0.password}") String password) {
-        DruidDataSource datasource = getDruidDataSource(url, username, password);
-        return datasource;
+        return getDruidDataSource(url, username, password);
     }
 
     /**
@@ -111,8 +110,7 @@ public class DruidDatasource implements CommandLineRunner {
             @Value("${sharding.jdbc.datasource.ds_1.url}") String url,
             @Value("${sharding.jdbc.datasource.ds_1.username}") String username,
             @Value("${sharding.jdbc.datasource.ds_1.password}") String password) {
-        DruidDataSource datasource = getDruidDataSource(url, username, password);
-        return datasource;
+        return getDruidDataSource(url, username, password);
     }
 
     private DruidDataSource getDruidDataSource(String url, String username, String password) {
