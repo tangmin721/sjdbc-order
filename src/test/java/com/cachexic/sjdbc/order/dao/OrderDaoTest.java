@@ -17,10 +17,12 @@ public class OrderDaoTest extends JunitTestParent {
     @Autowired
     private OrderDao orderDao;
 
+
+
     @Test
     public void insert() throws Exception {
 
-        for(long i=1;i<100;i++){
+        for(long i=1;i<101;i++){
             Order order = new Order();
             order.setId(i);
             order.setUserId(i);

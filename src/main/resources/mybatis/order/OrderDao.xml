@@ -19,17 +19,17 @@
 
     <!--单条插入-->
     <!--<insert id="insert" parameterType="com.cachexic.sjdbc.order.entity.Order" useGeneratedKeys="true" keyProperty="id">-->
-    <insert id="insert" parameterType="com.cachexic.sjdbc.order.entity.Order">
+    <insert id="insert" parameterType="com.cachexic.sjdbc.order.entity.Order" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="table" />
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            id,version,status,create_time,create_user_id,
+            version,status,create_time,create_user_id,
             <if test="userId != null">user_id,</if>
             <if test="orderSn != null">order_sn</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            #{id},#{version},#{status},now(),#{createUserId},
+            #{version},#{status},now(),#{createUserId},
             <if test="userId != null">#{userId},</if>
             <if test="orderSn != null">#{orderSn}</if>
         </trim>
