@@ -35,5 +35,14 @@ public class OrderDaoTest extends JunitTestParent {
         System.out.println(JsonUtil.toJson(orderDao.selectTest()));
     }
 
+    @Test
+    public void selectTestOrderById() throws Exception {
+        System.out.println(JsonUtil.toJson(orderDao.selectTestOrderById()));
+    }
+
+    @Test
+    public void selectTestOrderByIdLimit() throws Exception {
+        System.out.println(JsonUtil.toJson(orderDao.selectTestOrderByIdLimit(0L,10)));
+    }
 
 }

@@ -38,4 +38,12 @@
     <select id="selectTest" resultMap="order">
         select * from <include refid="table"/>
     </select>
+
+    <select id="selectTestOrderById" resultMap="order">
+        select * from <include refid="table"/> order by id
+    </select>
+
+    <select id="selectTestOrderByIdLimit" resultMap="order">
+        select * from <include refid="table"/> order by id limit #{rowStart},#{pageSize}
+    </select>
 </mapper>
