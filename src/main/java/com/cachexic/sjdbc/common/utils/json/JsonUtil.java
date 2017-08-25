@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class JsonUtil {
 
-    /*** 将List对象序列化为JSON文本 */
+    /*** 将对象序列化为JSON文本 */
     public static <T> String toJson(Object object) {
         return JsonMapper.nonNullMapper().toJson(object);
     }
 
     /***
-     * 将字符串对象转换为传入类型的对象
+     * 将字符串==>转换为传入类型的对象
      * @param
      * @param json
      * @param beanClass
@@ -29,7 +29,7 @@ public class JsonUtil {
     }
 
     /***
-     * 将Object对象转换为传入类型的对象
+     * 将Object对象==>转换为传入类型的对象
      * @param
      * @param object
      * @param beanClass
@@ -39,8 +39,24 @@ public class JsonUtil {
         return JsonMapper.nonNullMapper().fromJson(toJson(object),beanClass);
     }
 
+    /***
+     * 将字符串==>转换为传入类型的List
+     * @param
+     * @param objectClass
+     * @return
+     */
     public static <T> List<T> toList(String jsonString, Class<T> objectClass){
         return JsonMapper.nonNullMapper().fromJsonToList(jsonString,objectClass);
+    }
+
+    /***
+     * 将object对象=>转换为传入类型的List
+     * @param
+     * @param objectClass
+     * @return
+     */
+    public static <T> List<T> toList(Object object, Class<T> objectClass) {
+        return toList(toJson(object),objectClass);
     }
 
 }

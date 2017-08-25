@@ -1,5 +1,8 @@
 package com.cachexic.sjdbc.order.dao;
 
+import com.cachexic.sjdbc.common.core.StatusEnum;
+import com.cachexic.sjdbc.common.utils.json.JsonUtil;
+
 /**
  * Created by tangm on 2017/8/24.
  */
@@ -17,5 +20,7 @@ public class TestMain {
 
         System.out.println(Math.floorMod("107597344362463232".toString().hashCode(),2L));
         System.out.println(Math.floorMod(Math.floorDiv(Long.valueOf(107597344362463232L).toString().hashCode(),2L),2L));
+
+        System.out.println(JsonUtil.toJson(StatusEnum.toList()));
     }
 }

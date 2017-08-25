@@ -66,6 +66,7 @@ public class JsonMapper extends ObjectMapper {
     public static JsonMapper alwayslMapper() {
         return new JsonMapper(JsonInclude.Include.ALWAYS);
     }
+
     /**
      * Object可以是POJO，也可以是Collection或数组。
      * 如果对象为Null, 返回"null".
@@ -82,7 +83,7 @@ public class JsonMapper extends ObjectMapper {
 
     /**
      * 構造泛型的Type如List<MyBean>, 则调用constructParametricType(ArrayList.class,MyBean.class)
-     *             Map<String,MyBean>则调用(HashMap.class,String.class, MyBean.class)
+     * Map<String,MyBean>则调用(HashMap.class,String.class, MyBean.class)
      */
     public JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses) {
         return mapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
@@ -183,8 +184,8 @@ public class JsonMapper extends ObjectMapper {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> List<T> fromJsonToList(String jsonString, Class<T> classMeta){
-        return (List<T>) this.fromJson(jsonString,constructParametricType(List.class, classMeta));
+    public <T> List<T> fromJsonToList(String jsonString, Class<T> classMeta) {
+        return (List<T>) this.fromJson(jsonString, constructParametricType(List.class, classMeta));
     }
 
     /**
