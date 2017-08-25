@@ -3,6 +3,7 @@ package com.cachexic.sjdbc.order.entity;
 import com.cachexic.sjdbc.common.core.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -12,6 +13,7 @@ public class Order {
     private Long id;
     private Long userId;
     private String orderSn;
+    private BigDecimal totalActualPrice;
 
     private Integer version = 0;
     private StatusEnum status =StatusEnum.normal;
@@ -44,6 +46,14 @@ public class Order {
 
     public void setOrderSn(String orderSn) {
         this.orderSn = orderSn;
+    }
+
+    public BigDecimal getTotalActualPrice() {
+        return totalActualPrice;
+    }
+
+    public void setTotalActualPrice(BigDecimal totalActualPrice) {
+        this.totalActualPrice = totalActualPrice;
     }
 
     public Integer getVersion() {

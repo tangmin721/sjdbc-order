@@ -3,6 +3,7 @@ package com.cachexic.sjdbc.order.entity;
 import com.cachexic.sjdbc.common.core.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,8 +16,12 @@ import java.util.Date;
  */
 public class OrderItem {
     private Long id;
-    private Long userId;
-    private String orderSn;
+    private Long orderId;
+    private Long eshopId;
+    private String eshopName;
+    private Long productId;
+    private String productName;
+    private BigDecimal actualPrice;
 
     private Integer version = 0;
     private StatusEnum status =StatusEnum.normal;
@@ -35,20 +40,52 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public String getOrderSn() {
-        return orderSn;
+    public Long getEshopId() {
+        return eshopId;
     }
 
-    public void setOrderSn(String orderSn) {
-        this.orderSn = orderSn;
+    public void setEshopId(Long eshopId) {
+        this.eshopId = eshopId;
+    }
+
+    public String getEshopName() {
+        return eshopName;
+    }
+
+    public void setEshopName(String eshopName) {
+        this.eshopName = eshopName;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public BigDecimal getActualPrice() {
+        return actualPrice;
+    }
+
+    public void setActualPrice(BigDecimal actualPrice) {
+        this.actualPrice = actualPrice;
     }
 
     public Integer getVersion() {

@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cachexic.sjdbc.order.dao.OrderDao">
     <sql id="table"> t_order </sql>
-    <sql id="columns"> id,user_id,order_sn,version,create_time,create_user_id,update_time,update_user_id,status </sql>
+    <sql id="columns"> id,user_id,order_sn,total_actual_price,version,create_time,create_user_id,update_time,update_user_id,status </sql>
 
     <resultMap id="order" type="com.cachexic.sjdbc.order.entity.Order">
         <result property="id" column="id" javaType="Long"/>
         <result property="userId" column="user_id" />
         <result property="orderSn" column="order_sn" />
+        <result property="totalActualPrice" column="total_actual_price" />
 
         <result property="version" column="version" />
         <result property="createTime" column="create_time" />
@@ -15,6 +16,22 @@
         <result property="updateTime" column="update_time" />
         <result property="updateUserId" column="update_user_id" />
         <result property="status" column="status" />
+    </resultMap>
+
+    <resultMap id="orderAndItem" type="com.cachexic.sjdbc.order.entity.OrderAndItem">
+        <result property="userId" column="user_id" />
+        <result property="orderSn" column="order_sn" />
+        <result property="totalActualPrice" column="total_actual_price" />
+
+        <result property="orderId" column="order_id" />
+        <result property="orderItemOrderId" column="order_item_order_id" />
+        <result property="orderItemId" column="order_item_id" />
+        <result property="eshopId" column="eshop_id" />
+        <result property="eshopName" column="eshop_name" />
+        <result property="productId" column="product_id" />
+        <result property="productName" column="product_name" />
+        <result property="actualPrice" column="actual_price" />
+
     </resultMap>
 
     <!--单条插入-->
@@ -25,13 +42,15 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             version,status,create_time,create_user_id,
             <if test="userId != null">user_id,</if>
-            <if test="orderSn != null">order_sn</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="totalActualPrice != null">total_actual_price</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             #{version},#{status},now(),#{createUserId},
             <if test="userId != null">#{userId},</if>
-            <if test="orderSn != null">#{orderSn}</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="totalActualPrice != null">#{totalActualPrice}</if>
         </trim>
     </insert>
 
@@ -45,5 +64,13 @@
 
     <select id="selectTestOrderByIdLimit" resultMap="order">
         select * from <include refid="table"/> order by id limit #{rowStart},#{pageSize}
+    </select>
+    
+    <select id="selectOrderLeftJoin" resultMap="orderAndItem">
+      select
+        o.id as order_id,o.order_sn,o.total_actual_price,i.id as order_item_id,i.order_id as order_item_order_id,i.eshop_id,i.eshop_name,i.product_id,i.product_name,i.actual_price
+        from t_order o
+      LEFT JOIN t_order_item i on o.id = i.order_id
+      order by o.id
     </select>
 </mapper>

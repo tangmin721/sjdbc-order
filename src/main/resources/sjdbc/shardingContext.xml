@@ -15,12 +15,22 @@
 
     <!--基于类的方式-->
    <!-- <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
-    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>-->
+    <rdb:strategy id="orderTableSS" sharding-columns="order_id" algorithm-class="com.cachexic.sjdbc.common.config.sjdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>-->
 
     <!--基于表达式的方式-->
-    <rdb:strategy id="databaseShardingStrategy" sharding-columns="id" algorithm-expression="ds_${Math.floorMod(id.toString().hashCode(),2L)}"/>
-    <rdb:strategy id="tableShardingStrategy" sharding-columns="id" algorithm-expression="t_order_${Math.floorMod(Math.floorDiv(id.toString().hashCode(),2L),2L)}"/>
+    <!--分库算法-->
+    <rdb:strategy id="defaultDsSS" sharding-columns="id" algorithm-expression="ds_${Math.floorMod(id.toString().hashCode(),2L)}"/>
+    <rdb:strategy id="orderItemDsSS" sharding-columns="order_id" algorithm-expression="ds_${Math.floorMod(order_id.toString().hashCode(),2L)}"/>
+    
+    <!--分表算法-->
+    <rdb:strategy id="productTaleSS" sharding-columns="id" algorithm-expression="t_product_${Math.floorMod(Math.floorDiv(id.toString().hashCode(),2L),2L)}"/>
+
+    <rdb:strategy id="orderTableSS" sharding-columns="id" algorithm-expression="t_order_${Math.floorMod(Math.floorDiv(id.toString().hashCode(),2L),2L)}"/>
+    <rdb:strategy id="orderItemTableSS" sharding-columns="order_id" algorithm-expression="t_order_item_${Math.floorMod(Math.floorDiv(order_id.toString().hashCode(),2L),2L)}"/>
+
     <rdb:strategy id="testUuidEntityTableSS" sharding-columns="id" algorithm-expression="test_uuid_entity_${Math.floorMod(Math.floorDiv(id.toString().hashCode(),2L),2L)}"/>
+
+
 
     <rdb:data-source id="shardingDataSource">
         <!-- default-data-source默认数据源名称，未配置分片规则的表将通过默认数据源定位 -->
@@ -28,25 +38,28 @@
         <rdb:sharding-rule data-sources="ds_0, ds_1" default-data-source="ds_0" key-generator-class="com.dangdang.ddframe.rdb.sharding.keygen.DefaultKeyGenerator">
             <rdb:table-rules>
                 <!--简单分库分表-->
-                <rdb:table-rule logic-table="t_product" actual-tables="t_product_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
+                <rdb:table-rule logic-table="t_product" actual-tables="t_product_${0..1}" database-strategy="defaultDsSS" table-strategy="productTaleSS">
                     <!--自动生成分布式主键-->
                     <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
 
                 <!--ER关系表(配置点1)-->
-                <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
+                <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="defaultDsSS" table-strategy="orderTableSS">
+                    <rdb:generate-key-column column-name="id" />
+                </rdb:table-rule>
+                <rdb:table-rule logic-table="t_order_item" actual-tables="t_order_item_${0..1}" database-strategy="orderItemDsSS" table-strategy="orderItemTableSS">
                     <rdb:generate-key-column column-name="id" />
                 </rdb:table-rule>
 
                 <!--根据uuid分库分表-->
-                <rdb:table-rule logic-table="test_uuid_entity" actual-tables="test_uuid_entity_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="testUuidEntityTableSS"/>
+                <rdb:table-rule logic-table="test_uuid_entity" actual-tables="test_uuid_entity_${0..1}" database-strategy="defaultDsSS" table-strategy="testUuidEntityTableSS"/>
 
             </rdb:table-rules>
 
-            <!--配置ER关系(配置点2)
+            <!--配置ER关系(配置点2)-->
             <rdb:binding-table-rules>
                 <rdb:binding-table-rule logic-tables="t_order, t_order_item"/>
-            </rdb:binding-table-rules>-->
+            </rdb:binding-table-rules>
 
             <!-- 配置不需要分库分表的策略 -->
             <rdb:default-database-strategy sharding-columns="none" algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
