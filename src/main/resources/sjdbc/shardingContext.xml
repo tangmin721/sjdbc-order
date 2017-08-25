@@ -45,15 +45,19 @@
 
                 <!--ER关系表(配置点1)-->
                 <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="defaultDsSS" table-strategy="orderTableSS">
-                    <rdb:generate-key-column column-name="id" />
+                    <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
                 <rdb:table-rule logic-table="t_order_item" actual-tables="t_order_item_${0..1}" database-strategy="orderItemDsSS" table-strategy="orderItemTableSS">
-                    <rdb:generate-key-column column-name="id" />
+                    <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
 
-                <!--根据uuid分库分表-->
+                <!--根据uuid分库分表,通过直接设置id值-->
                 <rdb:table-rule logic-table="test_uuid_entity" actual-tables="test_uuid_entity_${0..1}" database-strategy="defaultDsSS" table-strategy="testUuidEntityTableSS"/>
 
+                <!--假设第三方数据源，指定数据源-->
+                <rdb:table-rule logic-table="test_other_ds" data-source-names="ds_1">
+                    <rdb:generate-key-column column-name="id"/>
+                </rdb:table-rule>
             </rdb:table-rules>
 
             <!--配置ER关系(配置点2)-->
@@ -65,6 +69,7 @@
             <rdb:default-database-strategy sharding-columns="none" algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
             <rdb:default-table-strategy sharding-columns="none" algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.table.NoneTableShardingAlgorithm"/>
         </rdb:sharding-rule>
+
         <rdb:props>
             <prop key="metrics.enable">true</prop>
             <prop key="sql.show">true</prop>
