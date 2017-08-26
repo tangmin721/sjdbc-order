@@ -1,4 +1,4 @@
-package com.cachexic.sjdbc.common.config.mybatis;
+package com.cachexic.sjdbc.common.config.mybatis.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 /**
  * @author tangmin
  * @version V1.0
- * @Title: Transient.java
+ * @Title: MybatisDao.java
  * @Package com.cachexic.sjdbc.common.config.mybatis
- * @Description: 自定义注解，只是标识不在数据库中保存的字段，没有实际作用。
- * @date 2017-08-20 16:08:24
+ * @Description: 扫描添加@MybatisDao的dao
+ * @date 2017-08-20 16:08:14
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Transient {
+@Target(ElementType.TYPE)
+public @interface MybatisDao {
 
 }

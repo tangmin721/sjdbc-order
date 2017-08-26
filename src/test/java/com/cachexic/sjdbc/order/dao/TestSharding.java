@@ -1,12 +1,12 @@
 package com.cachexic.sjdbc.order.dao;
 
-import com.cachexic.sjdbc.common.core.StatusEnum;
+import com.cachexic.sjdbc.common.enums.StatusEnum;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 
 /**
  * Created by tangm on 2017/8/24.
  */
-public class TestMain {
+public class TestSharding {
     public static void main(String[] args) {
         int floorDiv = Math.floorDiv(-11, 2);
         System.out.println("floorDiv : " + floorDiv);//最大商

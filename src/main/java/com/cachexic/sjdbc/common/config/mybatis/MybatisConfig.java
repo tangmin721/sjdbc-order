@@ -1,5 +1,6 @@
 package com.cachexic.sjdbc.common.config.mybatis;
 
+import com.cachexic.sjdbc.common.config.mybatis.annotation.MybatisDao;
 import com.dangdang.ddframe.rdb.sharding.jdbc.core.datasource.ShardingDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;

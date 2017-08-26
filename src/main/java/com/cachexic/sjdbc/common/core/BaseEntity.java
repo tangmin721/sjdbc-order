@@ -1,5 +1,6 @@
-package com.cachexic.sjdbc.order.entity;
+package com.cachexic.sjdbc.common.core;
 
+import com.cachexic.sjdbc.common.config.mybatis.annotation.Field;
 import com.cachexic.sjdbc.common.enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -8,39 +9,33 @@ import java.util.Date;
 /**
  * @author tangmin
  * @version V1.0
- * @Title: TestOtherDs.java
- * @Package com.cachexic.sjdbc.order.entity
- * @Description: 假设这是第三方数据源（多数据源）的一个表
- * @date 2017-08-25 17:52:20
+ * @Title: BaseEntity.java
+ * @Package com.cachexic.sjdbc.common.core
+ * @Description: 带有管理信息的基础实例类
+ * @date 2017-08-26 12:39:32
  */
-public class TestOtherDs {
-    private Long id;
-    private Integer seq;
+public class BaseEntity extends PojoBaseEntity {
 
+    @Field(value = "乐观锁版本号",defaultValue = "0")
     private Integer version = 0;
+
+    @Field(value = "状态",defaultValue ="normal")
     private StatusEnum status =StatusEnum.normal;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
+
     private Long createUserId;
+
+    private String createUserName;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
+
     private Long updateUserId;
 
-    public Long getId() {
-        return id;
-    }
+    private String updateUserName;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Integer seq) {
-        this.seq = seq;
-    }
 
     public Integer getVersion() {
         return version;
@@ -74,6 +69,14 @@ public class TestOtherDs {
         this.createUserId = createUserId;
     }
 
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -88,5 +91,13 @@ public class TestOtherDs {
 
     public void setUpdateUserId(Long updateUserId) {
         this.updateUserId = updateUserId;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
     }
 }

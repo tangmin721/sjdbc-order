@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.order.entity;
 
-import com.cachexic.sjdbc.common.core.StatusEnum;
+import com.cachexic.sjdbc.common.enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;

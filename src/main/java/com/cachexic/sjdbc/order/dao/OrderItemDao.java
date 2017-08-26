@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.order.dao;
 
-import com.cachexic.sjdbc.common.config.mybatis.MybatisDao;
+import com.cachexic.sjdbc.common.config.mybatis.annotation.MybatisDao;
 import com.cachexic.sjdbc.order.entity.OrderItem;
 import org.apache.ibatis.annotations.Param;
 

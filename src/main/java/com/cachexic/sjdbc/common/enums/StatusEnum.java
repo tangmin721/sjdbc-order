@@ -1,9 +1,9 @@
-package com.cachexic.sjdbc.common.core;
+package com.cachexic.sjdbc.common.enums;
+
+import com.cachexic.sjdbc.common.vo.ValueMemoVo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author tangmin
@@ -57,13 +57,12 @@ public enum StatusEnum {
      * @return
      */
     public static List toList() {
-        StatusEnum[] ary = StatusEnum.values();
         List list = new ArrayList();
-        for (int i = 0; i < ary.length; i++) {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("value", ary[i].getValue());
-            map.put("memo", ary[i].getMemo());
-            list.add(map);
+        for (StatusEnum _enum : StatusEnum.values()) {
+            ValueMemoVo valueMemoVo = new ValueMemoVo();
+            valueMemoVo.setValue(_enum.getValue());
+            valueMemoVo.setMemo(_enum.getMemo());
+            list.add(valueMemoVo);
         }
         return list;
     }

@@ -1,36 +1,30 @@
 package com.cachexic.sjdbc.order.entity;
 
-import com.cachexic.sjdbc.common.core.StatusEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.cachexic.sjdbc.common.config.mybatis.annotation.Entity;
+import com.cachexic.sjdbc.common.config.mybatis.annotation.Field;
+import com.cachexic.sjdbc.common.config.mybatis.annotation.Transient;
+import com.cachexic.sjdbc.common.core.BaseEntity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by tangm on 2017/8/20.
  */
-public class Order {
-    private Long id;
+@Entity("t_order")
+public class Order extends BaseEntity{
+
+    @Field("用户id")
     private Long userId;
+    @Transient
+    private String userName;
+
     private String orderSn;
+
+    @Field(value = "用户id",notNull = false,length = 200)
+    private String memo;
+
+    @Field(value = "实付总金额")
     private BigDecimal totalActualPrice;
-
-    private Integer version = 0;
-    private StatusEnum status =StatusEnum.normal;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createTime;
-    private Long createUserId;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date updateTime;
-    private Long updateUserId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -38,6 +32,14 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getOrderSn() {
@@ -48,59 +50,19 @@ public class Order {
         this.orderSn = orderSn;
     }
 
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
     public BigDecimal getTotalActualPrice() {
         return totalActualPrice;
     }
 
     public void setTotalActualPrice(BigDecimal totalActualPrice) {
         this.totalActualPrice = totalActualPrice;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public StatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusEnum status) {
-        this.status = status;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(Long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Long updateUserId) {
-        this.updateUserId = updateUserId;
     }
 }
