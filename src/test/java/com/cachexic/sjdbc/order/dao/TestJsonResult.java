@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.order.dao;
 
-import com.cachexic.sjdbc.common.core.Page;
+import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.core.Result;
 import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
@@ -37,11 +37,11 @@ public class TestJsonResult {
         System.out.println("========================");
 
 
-        Page<Order> orderPage = new Page<Order>(1L,10L,100L);
+        Pagination<Order> orderPage = new Pagination<Order>(1L,10L,100L);
         orderPage.setList(data1);
-        //Result<Page<Order>>
-        Result<Page<Order>> pageResult = Result.FAIL(BizExceptionEnum.MD5_ERROR).setData(orderPage);
-        Page<Order> data2 = pageResult.getData();
+        //Result<Pagination<Order>>
+        Result<Pagination<Order>> pageResult = Result.FAIL(BizExceptionEnum.MD5_ERROR).setData(orderPage);
+        Pagination<Order> data2 = pageResult.getData();
         List<Order> list = data2.getList();
         for (Order order1 : list) {
             System.out.println(order1.getId());

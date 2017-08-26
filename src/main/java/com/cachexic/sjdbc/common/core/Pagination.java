@@ -10,12 +10,12 @@ import java.util.List;
 /**
  * @author tangmin
  * @version V1.0
- * @Title: Page.java
+ * @Title: Pagination.java
  * @Package com.cachexic.sjdbc.common.core
  * @Description: 分页对象
  * @date 2017-08-26 12:39:10
  */
-public class Page<T> implements Serializable {
+public class Pagination<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,37 +30,43 @@ public class Page<T> implements Serializable {
     private Long total;
 
     /** 总页数 */
-    private Long totalPage = 0l;
+    private Long pageCount = 0l;
 
     /** 每页记录条数 */
     private Long pageSize = DEFAULT_PAGE_SIZE;
 
     /** 当前页 */
-    private Long pageCurrent;
+    private Long currentPage;
 
     /** 起始行,用于页面序号相加 */
     @JsonIgnore
     private Long pageStart = 0l;
 
     /**
+     * 是否使用小型分页样式
+     */
+    @JsonIgnore
+    protected boolean small;
+
+    /**
      * 私有化无参构造，feign层调用的时候用到对象的转换
      */
-    private Page(){
+    private Pagination(){
     }
 
-    public Page(Long pageCurrent, Long pageSize, Long total) {
+    public Pagination(Long currentPage, Long pageSize, Long total) {
         if (pageSize.longValue() > MAX_PAGE_SIZE) {
             this.pageSize = MAX_PAGE_SIZE;
         }
         if (pageSize.longValue() > 0 && pageSize.longValue() <= MAX_PAGE_SIZE) {
             this.pageSize = pageSize;
         }
-        this.pageCurrent = pageCurrent;
+        this.currentPage = currentPage;
         this.total = total;
 
         if (total > 0) {
-            this.totalPage = (total + pageSize - 1) / pageSize;
-            this.pageStart = pageSize * (pageCurrent - 1);
+            this.pageCount = (total + pageSize - 1) / pageSize;
+            this.pageStart = pageSize * (currentPage - 1);
         }
     }
 
@@ -80,12 +86,12 @@ public class Page<T> implements Serializable {
         this.total = total;
     }
 
-    public Long getTotalPage() {
-        return totalPage;
+    public Long getPageCount() {
+        return pageCount;
     }
 
-    public void setTotalPage(Long totalPage) {
-        this.totalPage = totalPage;
+    public void setPageCount(Long pageCount) {
+        this.pageCount = pageCount;
     }
 
     public Long getPageSize() {
@@ -96,12 +102,12 @@ public class Page<T> implements Serializable {
         this.pageSize = pageSize;
     }
 
-    public Long getPageCurrent() {
-        return pageCurrent;
+    public Long getCurrentPage() {
+        return currentPage;
     }
 
-    public void setPageCurrent(Long pageCurrent) {
-        this.pageCurrent = pageCurrent;
+    public void setCurrentPage(Long currentPage) {
+        this.currentPage = currentPage;
     }
 
     public Long getPageStart() {
@@ -112,4 +118,11 @@ public class Page<T> implements Serializable {
         this.pageStart = pageStart;
     }
 
+    public boolean isSmall() {
+        return small;
+    }
+
+    public void setSmall(boolean small) {
+        this.small = small;
+    }
 }
