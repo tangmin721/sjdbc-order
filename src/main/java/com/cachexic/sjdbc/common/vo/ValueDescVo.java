@@ -1,16 +1,18 @@
 package com.cachexic.sjdbc.common.vo;
 
+import java.io.Serializable;
+
 /**
  * @author tangmin
  * @version V1.0
- * @Title: ValueMemoVo.java
+ * @Title: ValueDescVo.java
  * @Package com.cachexic.sjdbc.common.vo
  * @Description: 
  * @date 2017-08-25 23:04:10
  */
-public class ValueMemoVo {
+public class ValueDescVo implements Serializable{
     private String value;
-    private String memo;
+    private String desc;
 
     public String getValue() {
         return value;
@@ -20,11 +22,11 @@ public class ValueMemoVo {
         this.value = value;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

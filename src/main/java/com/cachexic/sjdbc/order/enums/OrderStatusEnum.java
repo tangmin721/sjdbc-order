@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.order.enums;
 
-import com.cachexic.sjdbc.common.vo.ValueMemoVo;
+import com.cachexic.sjdbc.common.vo.ValueDescVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +30,19 @@ public enum OrderStatusEnum {
 
 
     private final String value;
-    private final String memo;
+    private final String desc;
 
-    OrderStatusEnum(String value, String memo) {
+    OrderStatusEnum(String value, String desc) {
         this.value = value;
-        this.memo = memo;
+        this.desc = desc;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getDesc() {
+        return desc;
     }
 
     public static OrderStatusEnum getByValue(String value) {
@@ -62,10 +62,10 @@ public enum OrderStatusEnum {
     public static List toList() {
         List list = new ArrayList();
         for (OrderStatusEnum _enum : OrderStatusEnum.values()) {
-            ValueMemoVo valueMemoVo = new ValueMemoVo();
-            valueMemoVo.setValue(_enum.getValue());
-            valueMemoVo.setMemo(_enum.getMemo());
-            list.add(valueMemoVo);
+            ValueDescVo valueDescVo = new ValueDescVo();
+            valueDescVo.setValue(_enum.getValue());
+            valueDescVo.setDesc(_enum.getDesc());
+            list.add(valueDescVo);
         }
         return list;
     }

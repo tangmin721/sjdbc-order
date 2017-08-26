@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.common.enums;
 
-import com.cachexic.sjdbc.common.vo.ValueMemoVo;
+import com.cachexic.sjdbc.common.vo.ValueDescVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +22,19 @@ public enum StatusEnum {
 
     private final String value;
     /** 备注信息 */
-    private final String memo;
+    private final String desc;
 
-    StatusEnum(String value, String memo) {
+    StatusEnum(String value, String desc) {
         this.value = value;
-        this.memo = memo;
+        this.desc = desc;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getDesc() {
+        return desc;
     }
 
     /**
@@ -59,10 +59,10 @@ public enum StatusEnum {
     public static List toList() {
         List list = new ArrayList();
         for (StatusEnum _enum : StatusEnum.values()) {
-            ValueMemoVo valueMemoVo = new ValueMemoVo();
-            valueMemoVo.setValue(_enum.getValue());
-            valueMemoVo.setMemo(_enum.getMemo());
-            list.add(valueMemoVo);
+            ValueDescVo valueDescVo = new ValueDescVo();
+            valueDescVo.setValue(_enum.getValue());
+            valueDescVo.setDesc(_enum.getDesc());
+            list.add(valueDescVo);
         }
         return list;
     }
