@@ -4,6 +4,7 @@ import com.cachexic.sjdbc.common.utils.UUIDUtil;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.entity.Order;
+import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.service.OrderService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,15 @@ public class OrderDaoTest extends JunitTestParent {
         orderService.createOrderAndOtherDs();
     }
 
+    /**
+     * 测试强制路由
+     * @throws Exception
+     */
+    @Test
+    public void hintManager() throws Exception {
+        System.out.println(JsonUtil.toJson(orderService.hintManager()));
+    }
+
 
     @Test
     public void insert() throws Exception {
@@ -53,21 +63,21 @@ public class OrderDaoTest extends JunitTestParent {
             order.setCreateUserId(i);
             orderDao.insert(order);
 
-//            OrderItem orderItem1 = new OrderItem();
-//            orderItem1.setOrderId(order.getId());
-//            orderItem1.setEshopId(i);
-//            orderItem1.setProductId(i);
-//            orderItem1.setProductName("1商品"+i);
-//            orderItem1.setCreateUserId(i);
-//            orderItemDao.insert(orderItem1);
-//
-//            OrderItem orderItem2 = new OrderItem();
-//            orderItem2.setOrderId(order.getId());
-//            orderItem2.setEshopId(i);
-//            orderItem2.setProductId(i);
-//            orderItem2.setProductName("2商品"+i);
-//            orderItem2.setCreateUserId(i);
-//            orderItemDao.insert(orderItem2);
+            OrderItem orderItem1 = new OrderItem();
+            orderItem1.setOrderId(order.getId());
+            orderItem1.setEshopId(i);
+            orderItem1.setProductId(i);
+            orderItem1.setProductName("1商品"+i);
+            orderItem1.setCreateUserId(i);
+            orderItemDao.insert(orderItem1);
+
+            OrderItem orderItem2 = new OrderItem();
+            orderItem2.setOrderId(order.getId());
+            orderItem2.setEshopId(i);
+            orderItem2.setProductId(i);
+            orderItem2.setProductName("2商品"+i);
+            orderItem2.setCreateUserId(i);
+            orderItemDao.insert(orderItem2);
         }
     }
 

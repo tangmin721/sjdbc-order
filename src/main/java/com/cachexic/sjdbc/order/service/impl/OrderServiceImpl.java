@@ -8,9 +8,12 @@ import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.entity.TestOtherDs;
 import com.cachexic.sjdbc.order.service.OrderService;
+import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by tangm on 2017/8/25.
@@ -66,5 +69,24 @@ public class OrderServiceImpl implements OrderService{
         TestOtherDs testOtherDs = new TestOtherDs();
         testOtherDs.setSeq(1);
         testOtherDsDao.insert(testOtherDs);
+
+    }
+
+    @Override
+    public List<Order> hintManager() {
+
+        HintManager hintManager = HintManager.getInstance();
+
+        //如果有读写分离，主库，则 强制读主库
+        //hintManager.setMasterRouteOnly();
+
+        //添加数据源分片键值(指定分库设置的shardingColumn，value:与他的id在同一个库)
+        hintManager.addDatabaseShardingValue("t_order", "id", 108665268296744960L);
+
+        //来添加表分片键值(指定分表设置的shardingColumn，value:与他的id在同一个表)
+        hintManager.addTableShardingValue("t_order", "id", 108665268296744960L);
+
+        //所以，查询出来的 都应该是本id对应的表
+        return this.orderDao.selectTest();
     }
 }
