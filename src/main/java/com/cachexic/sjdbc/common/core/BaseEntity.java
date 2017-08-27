@@ -22,18 +22,24 @@ public class BaseEntity extends PojoBaseEntity {
     @Field(value = "状态",defaultValue ="normal")
     private StatusEnum status =StatusEnum.normal;
 
+    @Field("创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
+    @Field("创建人Id")
     private Long createUserId;
 
+    @Field("创建人Name")
     private String createUserName;
 
+    @Field("最后更新时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @Field("更新人Id")
     private Long updateUserId;
 
+    @Field("更新人Name")
     private String updateUserName;
 
 
