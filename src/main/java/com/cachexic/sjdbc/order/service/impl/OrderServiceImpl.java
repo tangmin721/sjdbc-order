@@ -74,19 +74,18 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Order> hintManager() {
+        //通过try语句释放资源
+        try (HintManager hintManager = HintManager.getInstance()){
+            //如果有读写分离，主库，则 强制读主库
+            //hintManager.setMasterRouteOnly();
 
-        HintManager hintManager = HintManager.getInstance();
+            //添加数据源分片键值(指定分库设置的shardingColumn，value:与他的id在同一个库)
+            hintManager.addDatabaseShardingValue("t_order", "id", 108665268296744960L);
 
-        //如果有读写分离，主库，则 强制读主库
-        //hintManager.setMasterRouteOnly();
-
-        //添加数据源分片键值(指定分库设置的shardingColumn，value:与他的id在同一个库)
-        hintManager.addDatabaseShardingValue("t_order", "id", 108665268296744960L);
-
-        //来添加表分片键值(指定分表设置的shardingColumn，value:与他的id在同一个表)
-        hintManager.addTableShardingValue("t_order", "id", 108665268296744960L);
-
-        //所以，查询出来的 都应该是本id对应的表
-        return this.orderDao.selectTest();
+            //来添加表分片键值(指定分表设置的shardingColumn，value:与他的id在同一个表)
+            hintManager.addTableShardingValue("t_order", "id", 108665268296744960L);
+            //所以，查询出来的 都应该是本id对应的表
+            return this.orderDao.selectTest();
+        }
     }
 }
