@@ -9,5 +9,9 @@ public interface OrderService {
      * 测试事务
      */
     void createOrder();
-    
+
+    /**
+     * 测试不同数据源的事务
+     */
+    void createOrderAndOtherDs();
 }

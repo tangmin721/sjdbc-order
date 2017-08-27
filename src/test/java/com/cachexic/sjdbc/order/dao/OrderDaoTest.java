@@ -33,6 +33,16 @@ public class OrderDaoTest extends JunitTestParent {
         orderService.createOrder();
     }
 
+    /**
+     * 测试跨库事务
+     * @throws Exception
+     */
+    @Test
+    public void createOrderAndOtherDs() throws Exception {
+        orderService.createOrderAndOtherDs();
+    }
+
+
     @Test
     public void insert() throws Exception {
 

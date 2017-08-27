@@ -3,8 +3,10 @@ package com.cachexic.sjdbc.order.service.impl;
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.dao.OrderItemDao;
+import com.cachexic.sjdbc.order.dao.TestOtherDsDao;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.OrderItem;
+import com.cachexic.sjdbc.order.entity.TestOtherDs;
 import com.cachexic.sjdbc.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private TestOtherDsDao testOtherDsDao;
+
     @Autowired
     private OrderItemDao orderItemDao;
 
@@ -42,5 +48,23 @@ public class OrderServiceImpl implements OrderService{
             orderItem1.setCreateUserId(i);
             orderItemDao.insert(orderItem1);
         }
+    }
+
+    @Override
+    @Transactional
+    public void createOrderAndOtherDs(){
+        Order order = new Order();
+        order.setUserId(1L);
+        order.setOrderSn(UUIDUtil.getUUID());
+        order.setCreateUserId(1L);
+        orderDao.insert(order);
+
+        if(1==1){
+            throw new RuntimeException("抛出异常");
+        }
+
+        TestOtherDs testOtherDs = new TestOtherDs();
+        testOtherDs.setSeq(1);
+        testOtherDsDao.insert(testOtherDs);
     }
 }
