@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cachexic.sjdbc.order.dao.MenuDao">
+    <sql id="table"> sys_menu </sql>
+    <sql id="columns"> id,seq,version,create_time,create_user_id,update_time,update_user_id,status </sql>
+
+    <resultMap id="menu" type="com.cachexic.sjdbc.order.entity.Menu">
+        <result property="id" column="id"/>
+        <result property="seq" column="seq" />
+
+        <result property="version" column="version" />
+        <result property="createTime" column="create_time" />
+        <result property="createUserId" column="create_user_id" />
+        <result property="updateTime" column="update_time" />
+        <result property="updateUserId" column="update_user_id" />
+        <result property="status" column="status" />
+    </resultMap>
+
+    <!--单条插入-->
+    <insert id="insert" parameterType="com.cachexic.sjdbc.order.entity.Menu" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="table" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            version,status,create_time,create_user_id,
+            <if test="seq != null">seq</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{version},#{status},now(),#{createUserId},
+            <if test="seq != null">#{seq}</if>
+        </trim>
+    </insert>
+
+    <select id="selectTest" resultMap="menu">
+        select * from <include refid="table"/>
+    </select>
+
+    <select id="selectTestOrderById" resultMap="menu">
+        select * from <include refid="table"/> order by seq asc
+    </select>
+
+    <select id="selectTestOrderByIdLimit" resultMap="menu">
+        select * from <include refid="table"/> order by seq limit #{rowStart},#{pageSize}
+    </select>
+</mapper>

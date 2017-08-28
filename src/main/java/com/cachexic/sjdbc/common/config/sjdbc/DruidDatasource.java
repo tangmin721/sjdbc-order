@@ -116,6 +116,63 @@ public class DruidDatasource implements CommandLineRunner {
         return getDruidDataSource(url, username, password, publickey, filters);
     }
 
+    /**
+     * 不同机器的数据源 other_ds_0
+     *
+     * @param url
+     * @param username
+     * @param password
+     * @return
+     */
+    @Bean(name = "other_ds_0_master")
+    @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
+    public DataSource other_ds_0_master(
+            @Value("${sharding.jdbc.datasource.other_ds_0_master.url}") String url,
+            @Value("${sharding.jdbc.datasource.other_ds_0_master.username}") String username,
+            @Value("${sharding.jdbc.datasource.other_ds_0_master.password}") String password,
+            @Value("${sharding.jdbc.datasource.other_ds_0_master.publickey}") String publickey,
+            @Value("${sharding.jdbc.datasource.other_ds_0_master.filters}") String filters) {
+        return getDruidDataSource(url, username, password, publickey, filters);
+    }
+
+    /**
+     * 不同机器的数据源 other_ds_0_slave_0
+     *
+     * @param url
+     * @param username
+     * @param password
+     * @return
+     */
+    @Bean(name = "other_ds_0_slave_0")
+    @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
+    public DataSource other_ds_0_slave_0(
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.url}") String url,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.username}") String username,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.password}") String password,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.publickey}") String publickey,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.filters}") String filters) {
+        return getDruidDataSource(url, username, password, publickey, filters);
+    }
+
+    /**
+     * 不同机器的数据源 other_ds_0_slave_1
+     *
+     * @param url
+     * @param username
+     * @param password
+     * @return
+     */
+    @Bean(name = "other_ds_0_slave_1")
+    @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
+    public DataSource other_ds_0_slave_1(
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.url}") String url,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.username}") String username,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.password}") String password,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.publickey}") String publickey,
+            @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.filters}") String filters) {
+        return getDruidDataSource(url, username, password, publickey, filters);
+    }
+
     private DruidDataSource getDruidDataSource(String url, String username, String password, String publickey, String filters) {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(url);
