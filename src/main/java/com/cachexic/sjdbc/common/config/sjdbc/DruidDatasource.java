@@ -1,4 +1,4 @@
-package com.cachexic.sjdbc.common.config.mybatis;
+package com.cachexic.sjdbc.common.config.sjdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -65,9 +65,6 @@ public class DruidDatasource implements CommandLineRunner {
     @Value("${spring.datasource.poolPreparedStatements}")
     private boolean poolPreparedStatements;
 
-    @Value("${spring.datasource.filters}")
-    private String filters;
-
     @Value("${spring.datasource.removeAbandoned}")
     private boolean removeAbandoned;
 
@@ -82,6 +79,7 @@ public class DruidDatasource implements CommandLineRunner {
 
     /**
      * 数据源ds_0
+     *
      * @param url
      * @param username
      * @param password
@@ -93,12 +91,15 @@ public class DruidDatasource implements CommandLineRunner {
     public DataSource ds_0(
             @Value("${sharding.jdbc.datasource.ds_0.url}") String url,
             @Value("${sharding.jdbc.datasource.ds_0.username}") String username,
-            @Value("${sharding.jdbc.datasource.ds_0.password}") String password) {
-        return getDruidDataSource(url, username, password);
+            @Value("${sharding.jdbc.datasource.ds_0.password}") String password,
+            @Value("${sharding.jdbc.datasource.ds_0.publickey}") String publickey,
+            @Value("${sharding.jdbc.datasource.ds_0.filters}") String filters) {
+        return getDruidDataSource(url, username, password, publickey, filters);
     }
 
     /**
      * 数据源ds_1
+     *
      * @param url
      * @param username
      * @param password
@@ -109,16 +110,18 @@ public class DruidDatasource implements CommandLineRunner {
     public DataSource ds_1(
             @Value("${sharding.jdbc.datasource.ds_1.url}") String url,
             @Value("${sharding.jdbc.datasource.ds_1.username}") String username,
-            @Value("${sharding.jdbc.datasource.ds_1.password}") String password) {
-        return getDruidDataSource(url, username, password);
+            @Value("${sharding.jdbc.datasource.ds_1.password}") String password,
+            @Value("${sharding.jdbc.datasource.ds_1.publickey}") String publickey,
+            @Value("${sharding.jdbc.datasource.ds_1.filters}") String filters) {
+        return getDruidDataSource(url, username, password, publickey, filters);
     }
 
-    private DruidDataSource getDruidDataSource(String url, String username, String password) {
+    private DruidDataSource getDruidDataSource(String url, String username, String password, String publickey, String filters) {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(url);
         datasource.setUsername(username);
         datasource.setPassword(password);
-        setCommonProperties(datasource);
+        setCommonProperties(datasource, publickey);
         try {
             datasource.setFilters(filters);
         } catch (SQLException e) {
@@ -150,7 +153,7 @@ public class DruidDatasource implements CommandLineRunner {
         return filterRegistrationBean;
     }
 
-    private void setCommonProperties(DruidDataSource datasource) {
+    private void setCommonProperties(DruidDataSource datasource, String publickey) {
         datasource.setDriverClassName(driverClassName);
         datasource.setInitialSize(initialSize);
         datasource.setMinIdle(minIdle);
@@ -166,7 +169,10 @@ public class DruidDatasource implements CommandLineRunner {
         datasource.setRemoveAbandoned(removeAbandoned);
         datasource.setRemoveAbandonedTimeout(removeAbandonedTimeout);
         datasource.setLogAbandoned(logAbandoned);
-        datasource.setConnectionProperties("druid.stat.slowSqlMillis="+slowSqlMillis);
+        //配置数据库加密，慢查询
+        datasource.setConnectionProperties("config.decrypt=true;config.decrypt.key=" + publickey
+                + ";druid.stat.slowSqlMillis=" + slowSqlMillis
+        );
     }
 
     @Override

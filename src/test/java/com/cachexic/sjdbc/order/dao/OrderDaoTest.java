@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 /**
  * Created by tangm on 2017/8/20.
  */
-@ActiveProfiles("dev")
+@ActiveProfiles("prod")
 public class OrderDaoTest extends JunitTestParent {
 
     @Autowired
