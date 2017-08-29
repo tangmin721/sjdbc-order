@@ -36,8 +36,9 @@ import java.net.UnknownHostException;
  * ....IP最大ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
  * ....为了保证相加生成出的workerId < 1024,思路是将每个bit位的后6位相加。这样在一定程度上也可以满足workerId不重复的问题。
  * </p>
- * 使用这种IP生成workerId的方法,必须保证IP段相加不能重复
  *
+ * 使用这种IP生成workerId的方法,必须保证IP段相加不能重复
+ * 192.168.1.102=192.168.2.101 所以会有问题，最终决定用IPKeyGenerator
  * @author DogFc
  */
 public final class IPSectionKeyGenerator implements KeyGenerator {

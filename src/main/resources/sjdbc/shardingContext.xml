@@ -38,7 +38,7 @@
     <rdb:data-source id="shardingDataSource">
         <!-- default-data-source默认数据源名称，未配置分片规则的表将通过默认数据源定位 -->
         <!-- key-generator-class配置全局生成器 -->
-        <rdb:sharding-rule data-sources="ds_0, ds_1 ,other_ds_0" default-data-source="ds_0" key-generator-class="com.cachexic.sjdbc.common.config.sjdbc.keygen.IPSectionKeyGenerator">
+        <rdb:sharding-rule data-sources="ds_0, ds_1 ,other_ds_0" default-data-source="ds_0" key-generator-class="com.cachexic.sjdbc.common.config.sjdbc.keygen.IPKeyGenerator">
             <rdb:table-rules>
                 <!--简单分库分表-->
                 <rdb:table-rule logic-table="t_product" actual-tables="t_product_${0..1}" database-strategy="defaultDsSS" table-strategy="productTaleSS">
