@@ -25,34 +25,6 @@ public class OrderDaoTest extends JunitTestParent {
     @Autowired
     private OrderItemDao orderItemDao;
 
-    /**
-     * 测试事务
-     * @throws Exception
-     */
-    @Test
-    public void createOrder() throws Exception {
-        orderService.createOrder();
-    }
-
-    /**
-     * 测试跨库事务
-     * @throws Exception
-     */
-    @Test
-    public void createOrderAndOtherDs() throws Exception {
-        orderService.createOrderAndOtherDs();
-    }
-
-    /**
-     * 测试强制路由
-     * @throws Exception
-     */
-    @Test
-    public void hintManager() throws Exception {
-        System.out.println(JsonUtil.toJson(orderService.hintManager()));
-    }
-
-
     @Test
     public void insert() throws Exception {
 

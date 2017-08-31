@@ -62,9 +62,8 @@
                     <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
 
-                <!--读写分离的数据源-->
+                <!--读写分离的数据源，不设置<rdb:generate-key-column column-name="id"/>则表示自增-->
                 <rdb:table-rule logic-table="sys_menu" data-source-names="other_ds_0">
-                    <rdb:generate-key-column column-name="id"/>
                 </rdb:table-rule>
             </rdb:table-rules>
 

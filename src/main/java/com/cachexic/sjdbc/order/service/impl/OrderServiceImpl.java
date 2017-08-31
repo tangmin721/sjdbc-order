@@ -1,9 +1,11 @@
 package com.cachexic.sjdbc.order.service.impl;
 
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.order.dao.MenuDao;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.dao.OrderItemDao;
 import com.cachexic.sjdbc.order.dao.TestOtherDsDao;
+import com.cachexic.sjdbc.order.entity.Menu;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.entity.TestOtherDs;
@@ -28,6 +30,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private OrderItemDao orderItemDao;
+
+    @Autowired
+    private MenuDao menuDao;
 
     @Override
     @Transactional
@@ -62,14 +67,32 @@ public class OrderServiceImpl implements OrderService{
         order.setCreateUserId(1L);
         orderDao.insert(order);
 
-        if(1==1){
-            throw new RuntimeException("抛出异常");
-        }
+//        if(1==1){
+//            throw new RuntimeException("抛出异常");
+//        }
 
         TestOtherDs testOtherDs = new TestOtherDs();
         testOtherDs.setSeq(1);
         testOtherDsDao.insert(testOtherDs);
 
+    }
+
+    @Override
+    @Transactional
+    public void createOrderAndMenu() {
+        Order order = new Order();
+        order.setUserId(1L);
+        order.setOrderSn(UUIDUtil.getUUID());
+        order.setCreateUserId(1L);
+        orderDao.insert(order);
+
+//        if(1==1){
+//            throw new RuntimeException("抛出异常");
+//        }
+
+        Menu menu = new Menu();
+        menu.setSeq(1);
+        menuDao.insert(menu);
     }
 
     @Override

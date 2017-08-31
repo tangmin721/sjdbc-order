@@ -15,9 +15,15 @@ public interface OrderService {
     void createOrder();
 
     /**
-     * 测试不同数据源的事务
+     * 测试同机器不同数据源的事务
      */
     void createOrderAndOtherDs();
+
+
+    /**
+     * 测试不同机器不同数据源的事务
+     */
+    void createOrderAndMenu();
 
     /**
      * 测试强制路由

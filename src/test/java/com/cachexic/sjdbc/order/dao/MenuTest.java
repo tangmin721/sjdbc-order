@@ -34,7 +34,7 @@ public class MenuTest extends JunitTestParent {
     @Test
     public void selectTest() throws Exception {
         try (HintManager hintManager = HintManager.getInstance()){
-            //hintManager.setMasterRouteOnly();//强制读主库
+            hintManager.setMasterRouteOnly();//强制读主库
             List<Menu> object = menuDao.selectTest();
             System.out.println(JsonUtil.toJson(object));
             System.out.println(object.size());
