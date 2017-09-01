@@ -52,4 +52,9 @@ public class OrderServiceImplTest extends JunitTestParent{
         System.out.println(JsonUtil.toJson(orderService.hintManager()));
     }
 
+    @Test
+    public void scheduleMethod() throws Exception {
+        orderService.scheduleMethod();
+    }
+
 }

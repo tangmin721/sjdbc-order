@@ -1,6 +1,7 @@
 package com.cachexic.sjdbc.order.service.impl;
 
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.dao.MenuDao;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.dao.OrderItemDao;
@@ -12,6 +13,7 @@ import com.cachexic.sjdbc.order.entity.TestOtherDs;
 import com.cachexic.sjdbc.order.service.OrderService;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -116,5 +118,14 @@ public class OrderServiceImpl implements OrderService{
             //所以，查询出来的 都应该是本id对应的表
             return this.orderDao.selectTest();
         }
+    }
+
+    /**
+     * 每两秒执行一次
+     */
+    @Override
+    @Scheduled(fixedRate=2000)
+    public void scheduleMethod() {
+        System.out.println(JsonUtil.toJson(this.orderDao.selectTest()));
     }
 }

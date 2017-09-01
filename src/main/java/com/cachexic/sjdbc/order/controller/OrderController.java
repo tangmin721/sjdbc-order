@@ -1,8 +1,12 @@
 package com.cachexic.sjdbc.order.controller;
 
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
+import com.cachexic.sjdbc.order.dao.MenuDao;
+import com.cachexic.sjdbc.order.entity.Menu;
 import com.cachexic.sjdbc.order.entity.Order;
+import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
+
+    @Autowired
+    private MenuDao menuDao;
 
     //@RequestMapping(value = {"test","test1","test2"},method = RequestMethod.GET)   配置多种路径都访问同一个方法
     // @RequestMapping("/test",method = RequestMethod.GET)
@@ -53,7 +60,15 @@ public class OrderController {
         List<Order> orders1 = JsonUtil.toList(json, Order.class);
         System.out.println("getOrderList:::"+ JsonUtil.toJson(orders1));
 
-        return json;
+        List<Menu> object = null;
+        try (HintManager hintManager = HintManager.getInstance()){
+            hintManager.setMasterRouteOnly();//强制读主库
+            object = menuDao.selectTest();
+            System.out.println(JsonUtil.toJson(object));
+            System.out.println(object.size());
+        }
+
+        return JsonUtil.toJson(object);
     }
 
 }

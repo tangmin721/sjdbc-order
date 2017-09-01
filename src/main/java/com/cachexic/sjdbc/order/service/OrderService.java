@@ -29,4 +29,9 @@ public interface OrderService {
      * 测试强制路由
      */
     List<Order> hintManager();
+
+    /**
+     * 测试定时调度方法
+     */
+    void scheduleMethod();
 }
