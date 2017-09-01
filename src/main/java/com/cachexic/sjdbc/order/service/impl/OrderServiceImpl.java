@@ -86,13 +86,19 @@ public class OrderServiceImpl implements OrderService{
         order.setCreateUserId(1L);
         orderDao.insert(order);
 
-//        if(1==1){
-//            throw new RuntimeException("抛出异常");
-//        }
-
         Menu menu = new Menu();
         menu.setSeq(1);
         menuDao.insert(menu);
+
+        Order order2 = new Order();
+        order2.setUserId(2L);
+        order2.setOrderSn(UUIDUtil.getUUID());
+        order2.setCreateUserId(2L);
+        orderDao.insert(order2);
+
+        if(1==1){
+            throw new RuntimeException("抛出异常");
+        }
     }
 
     @Override

@@ -34,6 +34,16 @@ public class OrderServiceImplTest extends JunitTestParent{
     }
 
     /**
+     * 测试不同数据源跨库事务
+     * @throws Exception
+     */
+    @Test
+    public void createOrderAndMenu() throws Exception {
+        orderService.createOrderAndMenu();
+    }
+
+
+    /**
      * 测试强制路由
      * @throws Exception
      */
