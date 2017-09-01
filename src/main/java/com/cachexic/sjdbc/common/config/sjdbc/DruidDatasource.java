@@ -6,7 +6,6 @@ import com.alibaba.druid.support.http.WebStatFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -23,7 +22,7 @@ import java.sql.SQLException;
 @Component
 @Configuration
 @Order(1)
-public class DruidDatasource implements CommandLineRunner {
+public class DruidDatasource{
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
@@ -124,7 +123,7 @@ public class DruidDatasource implements CommandLineRunner {
      * @param password
      * @return
      */
-    @Bean(name = "other_ds_0_master")
+   /* @Bean(name = "other_ds_0_master")
     @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
     public DataSource other_ds_0_master(
             @Value("${sharding.jdbc.datasource.other_ds_0_master.url}") String url,
@@ -133,7 +132,7 @@ public class DruidDatasource implements CommandLineRunner {
             @Value("${sharding.jdbc.datasource.other_ds_0_master.publickey}") String publickey,
             @Value("${sharding.jdbc.datasource.other_ds_0_master.filters}") String filters) {
         return getDruidDataSource(url, username, password, publickey, filters);
-    }
+    }*/
 
     /**
      * 不同机器的数据源 other_ds_0_slave_0
@@ -143,7 +142,7 @@ public class DruidDatasource implements CommandLineRunner {
      * @param password
      * @return
      */
-    @Bean(name = "other_ds_0_slave_0")
+   /* @Bean(name = "other_ds_0_slave_0")
     @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
     public DataSource other_ds_0_slave_0(
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.url}") String url,
@@ -152,7 +151,7 @@ public class DruidDatasource implements CommandLineRunner {
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.publickey}") String publickey,
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_0.filters}") String filters) {
         return getDruidDataSource(url, username, password, publickey, filters);
-    }
+    }*/
 
     /**
      * 不同机器的数据源 other_ds_0_slave_1
@@ -162,7 +161,7 @@ public class DruidDatasource implements CommandLineRunner {
      * @param password
      * @return
      */
-    @Bean(name = "other_ds_0_slave_1")
+    /*@Bean(name = "other_ds_0_slave_1")
     @ConfigurationProperties(prefix = "sharding.jdbc.datasource")
     public DataSource other_ds_0_slave_1(
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.url}") String url,
@@ -171,7 +170,7 @@ public class DruidDatasource implements CommandLineRunner {
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.publickey}") String publickey,
             @Value("${sharding.jdbc.datasource.other_ds_0_slave_1.filters}") String filters) {
         return getDruidDataSource(url, username, password, publickey, filters);
-    }
+    }*/
 
     private DruidDataSource getDruidDataSource(String url, String username, String password, String publickey, String filters) {
         DruidDataSource datasource = new DruidDataSource();
@@ -230,10 +229,5 @@ public class DruidDatasource implements CommandLineRunner {
         datasource.setConnectionProperties("config.decrypt=true;config.decrypt.key=" + publickey
                 + ";druid.stat.slowSqlMillis=" + slowSqlMillis
         );
-    }
-
-    @Override
-    public void run(String... strings) throws Exception {
-
     }
 }
