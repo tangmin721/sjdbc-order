@@ -54,8 +54,12 @@
         </trim>
     </insert>
 
-    <select id="selectTest" resultMap="order">
-        select * from <include refid="table"/>
+    <select id="selectById" resultMap="order">
+        select * from <include refid="table"/> where id=#{id}
+    </select>
+
+    <select id="selectList" resultMap="order">
+        select * from <include refid="table"/> order by id desc
     </select>
 
     <select id="selectTestOrderById" resultMap="order">

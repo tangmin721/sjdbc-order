@@ -1,7 +1,7 @@
 package com.cachexic.sjdbc.order.service.impl;
 
+import com.cachexic.sjdbc.common.junit.JunitTestParent;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
-import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.service.OrderService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
  * Created by tangm on 2017/8/29.
  */
 @ActiveProfiles("dev")
-public class OrderServiceImplTest extends JunitTestParent{
+public class OrderServiceImplTest extends JunitTestParent {
     @Autowired
     private OrderService orderService;
 

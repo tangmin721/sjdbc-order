@@ -9,6 +9,10 @@ import java.util.List;
  */
 public interface OrderService {
 
+    Long insert(Order order);
+
+    List<Order> selectList();
+
     /**
      * 测试事务
      */

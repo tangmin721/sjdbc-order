@@ -1,7 +1,7 @@
 package com.cachexic.sjdbc.order.dao;
 
+import com.cachexic.sjdbc.common.junit.JunitTestParent;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
-import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;

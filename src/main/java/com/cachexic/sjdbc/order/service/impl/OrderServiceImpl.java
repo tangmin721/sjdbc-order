@@ -1,6 +1,9 @@
 package com.cachexic.sjdbc.order.service.impl;
 
+import com.cachexic.sjdbc.common.exceptions.BizException;
+import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.common.utils.json.JsonMapper;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.dao.MenuDao;
 import com.cachexic.sjdbc.order.dao.OrderDao;
@@ -12,6 +15,8 @@ import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.entity.TestOtherDs;
 import com.cachexic.sjdbc.order.service.OrderService;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,7 @@ import java.util.List;
  */
 @Service("orderService")
 public class OrderServiceImpl implements OrderService{
+    protected static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
     @Autowired
     private OrderDao orderDao;
 
@@ -35,6 +41,21 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private MenuDao menuDao;
+
+    @Override
+    public Long insert(Order order) {
+        Long insert = this.orderDao.insert(order);
+        if (insert <= 0) {
+            throw new BizException(BizExceptionEnum.DB_INSERT_RESULT_0);
+        }
+        log.info("{}==>insert entity-->{}", order.getClass(), JsonMapper.nonNullMapper().toJson(order));
+        return order.getId();
+    }
+
+    @Override
+    public List<Order> selectList() {
+        return this.orderDao.selectList();
+    }
 
     @Override
     @Transactional
@@ -116,7 +137,7 @@ public class OrderServiceImpl implements OrderService{
             //来添加表分片键值(指定分表设置的shardingColumn，value:与他的id在同一个表)
             hintManager.addTableShardingValue("t_order", "id", 108665268296744960L);
             //所以，查询出来的 都应该是本id对应的表
-            return this.orderDao.selectTest();
+            return this.orderDao.selectList();
         }
     }
 
@@ -126,6 +147,6 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Scheduled(fixedRate=2000)
     public void scheduleMethod() {
-        System.out.println(JsonUtil.toJson(this.orderDao.selectTest()));
+        System.out.println(JsonUtil.toJson(this.orderDao.selectList()));
     }
 }

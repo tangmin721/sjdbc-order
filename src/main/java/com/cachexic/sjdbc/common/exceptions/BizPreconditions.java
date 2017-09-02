@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
  * @Description: 模仿guava的Preconditions check预设条件,抛出业务异常，以便统一异常处理
  * @date 2017-09-01 23:10:27
  */
-public final class Preconditions {
-    private Preconditions() {}
+public final class BizPreconditions {
+    private BizPreconditions() {}
 
     /**
      * 校验参数

@@ -13,8 +13,9 @@ import java.util.List;
 @MybatisDao
 public interface OrderDao {
     Long insert(Order order);
+    Order selectById(@Param("id")Long id);
 
-    List<Order> selectTest();
+    List<Order> selectList();
     List<Order> selectTestOrderById();
     List<Order> selectTestOrderByIdLimit(@Param("rowStart") Long rowStart, @Param("pageSize")int pageSize);
     List<OrderAndItem> selectOrderLeftJoin();

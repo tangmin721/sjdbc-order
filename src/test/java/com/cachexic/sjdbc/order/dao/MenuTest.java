@@ -1,7 +1,7 @@
 package com.cachexic.sjdbc.order.dao;
 
+import com.cachexic.sjdbc.common.junit.JunitTestParent;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
-import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.entity.Menu;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import org.junit.Test;

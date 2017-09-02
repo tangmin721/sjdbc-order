@@ -1,8 +1,8 @@
 package com.cachexic.sjdbc.order.dao;
 
+import com.cachexic.sjdbc.common.junit.JunitTestParent;
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
-import com.cachexic.sjdbc.common.utils.junit.JunitTestParent;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.service.OrderService;
@@ -55,7 +55,7 @@ public class OrderDaoTest extends JunitTestParent {
 
     @Test
     public void selectTest() throws Exception {
-        System.out.println(JsonUtil.toJson(orderDao.selectTest()));
+        System.out.println(JsonUtil.toJson(orderDao.selectList()));
     }
 
     @Test
