@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -104,7 +104,7 @@ public class JsonMapper extends ObjectMapper {
      * List<MyBean> beanList = binder.getMapper().readValue(listString, new TypeReference<List<MyBean>>() {});
      */
     public <T> T fromJson(String jsonString, Class<T> clazz) {
-        if (StringUtils.isEmpty(jsonString)) {
+        if (Strings.isNullOrEmpty(jsonString)) {
             return null;
         }
 
@@ -122,7 +122,7 @@ public class JsonMapper extends ObjectMapper {
      * @see #createCollectionType(Class, Class...)
      */
     public <T> T fromJson(String jsonString, JavaType javaType) {
-        if (StringUtils.isEmpty(jsonString)) {
+        if (Strings.isNullOrEmpty(jsonString)) {
             return null;
         }
 

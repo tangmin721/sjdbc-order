@@ -85,11 +85,6 @@ public class BizException extends RuntimeException {
     }
 
     public static void main(String[] args) {
-        String msgFormat = "%s:你是谁?%s回答:%s?";
-        String[] sts = new String[]{"aaa", "bbb", "啥"};
-        String format = String.format(msgFormat, sts);
-        System.out.println(format);
-
         try {
             if(1>0){
                 throw new OrderBizException("%s:你是谁?%s回答:%s?", "aaa", "bbb", "啥");

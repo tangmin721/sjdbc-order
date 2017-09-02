@@ -1,14 +1,17 @@
 package com.cachexic.sjdbc.order.controller;
 
+import com.cachexic.sjdbc.common.core.Result;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.dao.MenuDao;
 import com.cachexic.sjdbc.order.entity.Menu;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -38,6 +41,13 @@ public class OrderController {
         System.out.println("getOrderById::"+ JsonUtil.toJson(order1));
 
         return json;
+    }
+
+    @GetMapping("result")
+    @ResponseBody
+    public Result result(){
+        Preconditions.checkArgument(1==0);
+        return Result.OK();
     }
 
     @GetMapping("getOrderList")

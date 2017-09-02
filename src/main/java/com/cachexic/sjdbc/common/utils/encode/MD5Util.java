@@ -1,6 +1,6 @@
 package com.cachexic.sjdbc.common.utils.encode;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Strings;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,11 +34,9 @@ public class MD5Util {
 
     /**
      * 获取文件MD5值
-     *
      * @param file
      * @return
      * @throws IOException
-     * @date 2012-1-9下午3:15:43
      */
     public static String getFileMD5String(File file) throws IOException {
         InputStream fis = null;
@@ -58,14 +56,10 @@ public class MD5Util {
     }
 
     /**
-     * 密码字符串MD5加密 32位小写
-     *
-     * @param str
-     * @return
-     * @date 2012-1-9下午3:16:04
+     * @Description: 密码字符串MD5加密 32位小写
      */
     public static synchronized String getStringMD5(String str) {
-        if (StringUtils.isEmpty(str)) {
+        if (Strings.isNullOrEmpty(str)) {
             return "";
         }
         byte[] buffer = str.getBytes();
