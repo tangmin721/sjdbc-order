@@ -1,9 +1,11 @@
 package com.cachexic.sjdbc.order.controller;
 
+import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.core.Result;
 import com.cachexic.sjdbc.common.exceptions.BizPreconditions;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.entity.Order;
+import com.cachexic.sjdbc.order.entity.query.OrderQuery;
 import com.cachexic.sjdbc.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,11 @@ public class OrderController {
     public Result<List<Order>>  getOrderList(){
         List<Order> orders = orderService.selectList();
         return  Result.OK().setData(orders);
+    }
+
+    @RequestMapping("selectPagination")
+    public Result<Pagination<Order>> selectPagination(@RequestBody OrderQuery orderQuery){
+        return  Result.OK().setData(orderService.selectPagination(orderQuery));
     }
 
 }

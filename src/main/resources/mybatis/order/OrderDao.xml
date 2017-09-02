@@ -58,8 +58,20 @@
         select * from <include refid="table"/> where id=#{id}
     </select>
 
-    <select id="selectList" resultMap="order">
+    <select id="selectList" parameterType="com.cachexic.sjdbc.order.entity.query.OrderQuery" resultMap="order">
         select * from <include refid="table"/> order by id desc
+    </select>
+
+    <select id="selectListPage" parameterType="com.cachexic.sjdbc.order.entity.query.OrderQuery" resultMap="order">
+        select * from <include refid="table"/> order by id desc
+        <if test="startRow != null">
+            limit  #{startRow},#{pageSize}
+        </if>
+    </select>
+
+    <!--总条数-->
+    <select id="selectListTotal" parameterType="com.cachexic.sjdbc.order.entity.query.OrderQuery" resultType="long">
+        select count(1) from <include refid="table" />
     </select>
 
     <select id="selectTestOrderById" resultMap="order">

@@ -1,5 +1,6 @@
 package com.cachexic.sjdbc.order.service.impl;
 
+import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.exceptions.BizException;
 import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
 import com.cachexic.sjdbc.common.utils.UUIDUtil;
@@ -13,6 +14,7 @@ import com.cachexic.sjdbc.order.entity.Menu;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.OrderItem;
 import com.cachexic.sjdbc.order.entity.TestOtherDs;
+import com.cachexic.sjdbc.order.entity.query.OrderQuery;
 import com.cachexic.sjdbc.order.service.OrderService;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import org.slf4j.Logger;
@@ -148,5 +150,15 @@ public class OrderServiceImpl implements OrderService{
     @Scheduled(fixedRate=2000)
     public void scheduleMethod() {
         System.out.println(JsonUtil.toJson(this.orderDao.selectList()));
+    }
+
+    @Override
+    public Pagination<Order> selectPagination(OrderQuery query) {
+        long total = this.orderDao.selectListTotal(query);
+        Pagination<Order> pagination = new Pagination<>(query.getCurrentPage(), query.getPageSize(),total);
+        if(total>0){
+            pagination.setList(this.orderDao.selectListPage(query));
+        }
+        return pagination;
     }
 }

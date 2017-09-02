@@ -1,7 +1,7 @@
 package com.cachexic.sjdbc.common.aop;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cachexic.sjdbc.common.utils.json.JsonUtil;
+import com.cachexic.sjdbc.common.utils.network.NetworkUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -38,22 +38,22 @@ public class HttpAspect {
      */
     @Before("log()")
     public void doBefore(JoinPoint joinpoint){
-        logger.info("before controller ....");
+        logger.info("====> before controller ....");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        logger.info("url={}",request.getRequestURL());
-        logger.info("method={}",request.getMethod());
-        logger.info("ip={}",request.getRemoteAddr());
+        logger.info("====> url={}",request.getRequestURL());
+        logger.info("====> method={}",request.getMethod());
+        logger.info("====> ip={},realIp={}",request.getRemoteAddr(), NetworkUtil.getIpAddress(request));
         //获取类名.方法
-        logger.info("class_method={}",joinpoint.getSignature().getDeclaringTypeName()+"."+joinpoint.getSignature().getName());
-        logger.info("args={}",joinpoint.getArgs());
+        logger.info("====> class_method={}",joinpoint.getSignature().getDeclaringTypeName()+"."+joinpoint.getSignature().getName());
+        logger.info("====> args={}",JsonUtil.toJson(joinpoint.getArgs()));
 
     }
 
     @After("log()")
     public void doAfter(){
-        logger.info("do after controller...");
+        logger.info("====> do after controller...");
     }
 
     /**
@@ -62,11 +62,6 @@ public class HttpAspect {
      */
     @AfterReturning(returning = "object",pointcut = "log()")
     public void returning(Object object){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            logger.info("response={}", mapper.writeValueAsString(object));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        logger.info("====> response={}", JsonUtil.toJson(object));
     }
 }

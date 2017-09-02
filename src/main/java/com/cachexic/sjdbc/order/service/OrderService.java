@@ -1,6 +1,8 @@
 package com.cachexic.sjdbc.order.service;
 
+import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.order.entity.Order;
+import com.cachexic.sjdbc.order.entity.query.OrderQuery;
 
 import java.util.List;
 
@@ -38,4 +40,6 @@ public interface OrderService {
      * 测试定时调度方法
      */
     void scheduleMethod();
+
+    Pagination<Order> selectPagination(OrderQuery query);
 }
