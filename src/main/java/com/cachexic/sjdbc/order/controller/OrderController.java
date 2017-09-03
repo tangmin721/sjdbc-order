@@ -2,6 +2,8 @@ package com.cachexic.sjdbc.order.controller;
 
 import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.core.Result;
+import com.cachexic.sjdbc.common.exceptions.BizException;
+import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
 import com.cachexic.sjdbc.common.exceptions.BizPreconditions;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.entity.Order;
@@ -51,6 +53,9 @@ public class OrderController {
 
     @RequestMapping("selectPagination")
     public Result<Pagination<Order>> selectPagination(@RequestBody OrderQuery orderQuery){
+        if(orderQuery!=null){
+            throw new BizException(BizExceptionEnum.PARAMETER_ERROR.getCode(), "测试统一异常处理");
+        }
         return  Result.OK().setData(orderService.selectPagination(orderQuery));
     }
 

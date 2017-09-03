@@ -1,7 +1,7 @@
 package com.cachexic.sjdbc.order.dao;
 
 import com.cachexic.sjdbc.common.junit.JunitTestParent;
-import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.common.utils.id.UUIDUtil;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.entity.TestUuidEntity;
 import org.junit.Assert;

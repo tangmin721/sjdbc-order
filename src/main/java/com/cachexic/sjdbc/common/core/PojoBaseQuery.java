@@ -27,7 +27,7 @@ public class PojoBaseQuery implements Serializable {
     protected Long startRow;
 
     /** 当前页 */
-    protected Long currentPage = 1l;
+    protected Long currentPage = 1L;
 
     /** Sql查询字段,可自定义只取哪几列的信息 */
     protected String fields;

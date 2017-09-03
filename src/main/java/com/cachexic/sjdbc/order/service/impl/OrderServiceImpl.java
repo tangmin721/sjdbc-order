@@ -3,7 +3,7 @@ package com.cachexic.sjdbc.order.service.impl;
 import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.exceptions.BizException;
 import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
-import com.cachexic.sjdbc.common.utils.UUIDUtil;
+import com.cachexic.sjdbc.common.utils.id.UUIDUtil;
 import com.cachexic.sjdbc.common.utils.json.JsonMapper;
 import com.cachexic.sjdbc.common.utils.json.JsonUtil;
 import com.cachexic.sjdbc.order.dao.MenuDao;

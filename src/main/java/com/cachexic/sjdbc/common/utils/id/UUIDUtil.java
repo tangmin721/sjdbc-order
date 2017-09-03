@@ -1,4 +1,4 @@
-package com.cachexic.sjdbc.common.utils;
+package com.cachexic.sjdbc.common.utils.id;
 
 import java.util.UUID;
 

@@ -31,21 +31,27 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(HttpServletRequest request, Exception e) {
-        log.warn("Before ExceptionHandler ==> url=[{}],method=[{}],ip=[{}]", request.getRequestURL(), request.getMethod(), request.getRemoteAddr());
-
+        String requestInfo = String.format("====> ExceptionHandler ==>[RequestInfo:url=[%s],method=%s,ip%s,requestId=%s,requestArgs=%s],",
+                request.getRequestURL(),
+                request.getMethod(),
+                request.getRemoteAddr(),
+                request.getAttribute(SystemConst.REQUEST_ID),
+                request.getAttribute(SystemConst.REQUEST_ARGS));
         //长异常信息 e   短异常信息 e.getMessage()
+        String exceptionInfo = "[Exception info:exception class:{},errorCode:{},message:{}]";
+        String logStr = requestInfo + exceptionInfo;
 
         //传入参数异常
-        if(e instanceof org.springframework.http.converter.HttpMessageNotReadableException){
-            log.warn("Exception class[{}],errorCode:[{}],message:[{}]", e.getClass().getName(),BizExceptionEnum.PARAMETER_ERROR.getCode(),e.getMessage());
+        if (e instanceof org.springframework.http.converter.HttpMessageNotReadableException) {
+            log.warn(logStr, e.getClass().getName(), BizExceptionEnum.PARAMETER_ERROR.getCode(), e.getMessage());
             return Result.FAIL(BizExceptionEnum.PARAMETER_ERROR.getCode(), BizExceptionEnum.PARAMETER_ERROR.getMsg());
             //再写总的业务异常
         } else if (e instanceof BizException) {
             BizException ex = (BizException) e;
-            log.warn("Exception class[{}],errorCode:[{}],message:[{}]", e.getClass().getName(),ex.getCode(),e.getMessage());
+            log.warn(logStr, e.getClass().getName(), ex.getCode(), e.getMessage());
             return Result.FAIL(ex.getCode(), ex.getMessage());
         } else {
-            log.error("Exception class[{}],errorCode:[{}],message:[{}]", e.getClass().getName(), SystemConst.SYS_EX_CODE,e);
+            log.error(logStr, e.getClass().getName(), SystemConst.SYS_EX_CODE, e);
             return Result.FAIL(SystemConst.SYS_EX_CODE, SystemConst.SYS_EX_MSG + "==>" + e.getMessage());
         }
     }
