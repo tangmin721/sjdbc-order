@@ -2,13 +2,12 @@ package com.cachexic.sjdbc.order.controller;
 
 import com.cachexic.sjdbc.common.core.Pagination;
 import com.cachexic.sjdbc.common.core.Result;
-import com.cachexic.sjdbc.common.exceptions.BizException;
-import com.cachexic.sjdbc.common.exceptions.BizExceptionEnum;
 import com.cachexic.sjdbc.common.exceptions.BizPreconditions;
 import com.cachexic.sjdbc.order.dao.OrderDao;
 import com.cachexic.sjdbc.order.entity.Order;
 import com.cachexic.sjdbc.order.entity.query.OrderQuery;
 import com.cachexic.sjdbc.order.service.OrderService;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +53,8 @@ public class OrderController {
     @RequestMapping("selectPagination")
     public Result<Pagination<Order>> selectPagination(@RequestBody OrderQuery orderQuery){
         if(orderQuery!=null){
-            throw new BizException(BizExceptionEnum.PARAMETER_ERROR.getCode(), "测试统一异常处理");
+            //throw new BizException(BizExceptionEnum.PARAMETER_ERROR.getCode(), "测试统一异常处理");
+            Preconditions.checkArgument(false,"测试另外的异常");
         }
         return  Result.OK().setData(orderService.selectPagination(orderQuery));
     }

@@ -37,7 +37,7 @@ public class ExceptionHandle {
                 request.getRemoteAddr(),
                 request.getAttribute(SystemConst.REQUEST_ID),
                 request.getAttribute(SystemConst.REQUEST_ARGS));
-        //长异常信息 e   短异常信息 e.getMessage()
+
         String exceptionInfo = "[Exception info:exception class:{},errorCode:{},message:{}]";
         String logStr = requestInfo + exceptionInfo;
 
@@ -51,8 +51,8 @@ public class ExceptionHandle {
             log.warn(logStr, e.getClass().getName(), ex.getCode(), e.getMessage());
             return Result.FAIL(ex.getCode(), ex.getMessage());
         } else {
-            log.error(logStr, e.getClass().getName(), SystemConst.SYS_EX_CODE, e);
-            return Result.FAIL(SystemConst.SYS_EX_CODE, SystemConst.SYS_EX_MSG + "==>" + e.getMessage());
+            log.error(logStr, e.getClass().getName(), SystemConst.SYS_EX_CODE, e);//长异常信息 e
+            return Result.FAIL(SystemConst.SYS_EX_CODE, SystemConst.SYS_EX_MSG + ":" + e.getMessage());
         }
     }
 }
