@@ -22,7 +22,7 @@ public enum BizExceptionEnum {
     REQUEST_EXP(-1, "请求已过期"),
     MD5_ERROR(-1, "MD5校验失败"),
     PARAMETER_ERROR(-1, "参数错误"),
-    STATE_ERROR(-1, "条件不成立"),
+    STATE_ERROR(-1, "预设条件不成立"),
     NULL_ERROR(-1, "空指针异常"),
 
     DATA_QUERY_ERROR(-1, "查询数据失败"),
