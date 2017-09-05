@@ -2,6 +2,7 @@ package com.cachexic.sjdbc.common.exceptions;
 
 import com.cachexic.sjdbc.common.constants.SystemConst;
 import com.cachexic.sjdbc.common.core.Result;
+import com.cachexic.sjdbc.common.utils.network.IpAddressUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,7 +35,7 @@ public class ExceptionHandle {
         String requestInfo = String.format("====> ExceptionHandler ==>[RequestInfo:url=[%s],method=%s,ip%s,requestId=%s,requestArgs=%s],",
                 request.getRequestURL(),
                 request.getMethod(),
-                request.getRemoteAddr(),
+                IpAddressUtil.getRealIp(request),
                 request.getAttribute(SystemConst.REQUEST_ID),
                 request.getAttribute(SystemConst.REQUEST_ARGS));
 
