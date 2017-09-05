@@ -32,12 +32,19 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(HttpServletRequest request, Exception e) {
+
+        //当参数是一个空的 {} 时的处理
+        String args = request.getAttribute(SystemConst.REQUEST_ARGS).toString();
+        if(args.equals("{}")){
+            args = "";
+        }
+
         String requestInfo = String.format("====> ExceptionHandler ==>[RequestInfo:url=[%s],method=%s,ip%s,requestId=%s,requestArgs=%s],",
                 request.getRequestURL(),
                 request.getMethod(),
                 IpAddressUtil.getRealIp(request),
                 request.getAttribute(SystemConst.REQUEST_ID),
-                request.getAttribute(SystemConst.REQUEST_ARGS));
+                args);
 
         String exceptionInfo = "[Exception info:exception class:{},errorCode:{},message:{}]";
         String logStr = requestInfo + exceptionInfo;
